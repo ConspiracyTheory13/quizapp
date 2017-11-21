@@ -7,10 +7,14 @@
 body {
   font-family: cursive;
   background-color: darkgrey;
-
+  font-size: 30px;
+  color:lightgrey;
 }
 img {
   image-orientation: center;
+}
+.answer-block > input{
+  display:block;
 }
 
 h1 {
@@ -25,5 +29,9 @@ h2 {
 
 p {
     font-family: verdana;
-    font-size: 20px;
+
+}
+
+.hidden{
+  display:none;
 }

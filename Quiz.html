@@ -4,52 +4,30 @@
     <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="quiz.css">
-<!-- //JQUERY LINK HERE// -->
+<!-- //JQUERY LINK HERE// -->    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
     <script src="quiz.js"> </script>
     <title>Calicem Protegit</title>
 <header>
 
   <img src="mockuplogo.png" alt="Logo for the order" align="center">
   <h2>Welcome initiate, you've cracked the cipher and made it here. One more test. <br>
-  <a href="#" class="next">Begin &raquo;</a> </h2>
+  <a href="#" id="startQuiz">Begin &raquo;</a> </h2>
 
 </header>
 
   </head>
   <body>
     <div class="quizContainer">
-    <div class="quiz">
-
- <form method="postid="question1">
- <h2> Question 1: From what source is the fire of magic born into the hands of human casters?  </h2>
- <input type="radio" name="question1A" value="Suffering"> Suffering. <br>
- <input type="radio" name="question1B" value="Innate Magical Ability"> Innate magical ability.<br>
- <input type="radio" name="question1C" value="Deals with Magical denizens"> Deals with magical denizens. <br>
- <input type="radio" name="question1D" value="all"> All of the above. <br>
- 
-<button type="button"> Submit </button>
- <a href="#" class="next">Next &raquo;</a>
- </form>
+    <div id="quiz">
 
 
- <form method="postid="question2">
- <h3> Question 2:Your local priest needs help performing an exorcism on a child.  You suspect that this is a very high level possession. What is the only surest way to prevent the demon from jumping meat suits and possessing you instead? </h3>
- <input type="radio" name="question2A" value="faith"> Wearing a symbol of my faith.<br>
- <input type="radio" name="question2B" value="Never make eye contact"> Never making eye contact with the possessed child.<br>
- <input type="radio" name="question2C" value="Learn the name of the devil"> Learning the name of the devil first. <br>
- <input type="radio" name="question2D" value="Solomon Seal">  Carving a Solomon seal into the body of the child. <br>
+    </div>
+    </div>
+   <a href="#" id="submit" class="hidden">submit answer</a>
 
-<button type="button"> Submit</button>
-<a href="#" class="next">Next &raquo;</a>
- </form>
-   </div>
-   </div>
 
 </body>
 
 </html>
-
-<button id="previous">Previous Question</button>
-<button id="next">Next Question</button>
-<button id="submit">Submit Quiz</button>
 <div id="results"></div>

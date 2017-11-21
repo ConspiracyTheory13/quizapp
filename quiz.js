@@ -1,124 +1,96 @@
 function askQuestions() {
   const myQuestions = [{
     question: "Question 1: From what source is the fire of magic born into the hands of human casters?",
-    answers: {
-    a: "Suffering",
-    b: "Innate magical ability",
-    c: "Deals with magical denizens",
-    d: "All of the above"
-},
-correctAnswer: "d"
-},
+    answers: [
+      "Suffering",
+      "Innate magical ability",
+      "Deals with magical denizens",
+      "All of the above"
+    ],
+    correctAnswerIndex: 3
+  }, {
+    question: "Your local priest needs help performing an exorcism on a child. You suspect that this is a very high level possession. What is the only surest way to prevent the demon from jumping meat suits and possessing you instead?",
+    answers: [
+      "Wearing a symbol of my faith",
+      "Never making eye contact",
+      "Learning the name of the devil first",
+      "Carving a Solomon seal into the body of the child"
+    ],
+    correctAnswerIndex: 3
+  }];
+  var currentQuestionIndex = 0;
+  var score = 0; //increases by 1 per right answer (and zero for a wrong answer)
+  const maxScore = myQuestions.length;
 
-{
-  question: "Your local priest needs help performing an exorcism on a child. You suspect that this is a very high level possession. What is the only surest way to prevent the demon from jumping meat suits and possessing you instead?",
-  answers: {
-  a: "Wearing a symbol of my faith",
-  b: "Never making eye contact",
-  c: "Learning the name of the devil first",
-  d: "Carving a Solomon seal into the body of the child"
-},
-correctAnswer: "d"
-}
-];
+  const quizContainer = $('#quiz');
+  const resultsContainer = $('#results');
+  const submitButton = $('#submit');
+  const startButton = $('#startQuiz');
 
-const quizContainer = document.getElementById('quiz');
-console.log(quizContainer)
-
-const resultsContainer =
-  document.getElementById('results');
-const submitButton =
-  document.getElementById('submit')
-
-function buildQuiz() {
-var output = [];
-myQuestions.forEach((currentQuestion, questionNumber) => {
-    const answers = [];
-
-    for (letter in currentQuestion.answers) {
-      answers.push( `<label>
-        <input type ="radio" name="question${questionNumber}" value = "${letter}">
-        ${letter}:
-        ${currentQuestion.answers[letter]}
-        </label>`
-      );
+  function buildHTML(questionObject) {
+    var answerBlock = '';
+    for (i = 0; i < questionObject.answers.length; i++) {
+      answerBlock +=
+        `<input type="radio" id="${i}" name="answer" value="${questionObject.answers[i]}"><label for="${i}">${questionObject.answers[i]}</label>`
     }
-
-    output.push(
-      `<div class = "slide">
-        <div class="question"> ${currentQuestion.question} </div>
-        <div class="answers.join"("")} </div>
-       </div>`
-     );
-   });
-
-quizContainer.innerHTML = output.join("");
-}
-
-function showResults() {
-  const answerContainers = quizContainer.querySelectorAll(".answers");
-
-
-let numCorrect = 0;
-myQuestions.forEach((currentQuestion, questionNumber) => {
-    const answerContainer = answerContainers[questionNumber];
-    const selector = `input[name=question${questionNumber}]:checked`;
-    const userAnswer = (answerContainer.querySelector(selector) || {}).value;
-  if (userAnswer === currentQuestion.correctAnswer) {
-    numCorrect++;
-    answerContainers[questionNumber].style.color = 'lightgreen';
-    document.write("Correct! Good job.");
-  } else {
-      answerContainers[questionNumber].style.color =
-        'red';
-        document.write("Incorrect");
-
-    }
-  });
-
-resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
-}
-
-function showSlide(n) {
-  slides[currentSlide].classList.remove("active-slide");
-  slides[n].classList.add("active-slide");
-  currentSlide = n;
-
-  if (currentSlide === 0) {Rerun
-    previousButton.style.display = "none";
-  } else {
-    previousButton.style.display = "inline-block";
+    return (
+      `<div class="question-block">${questionObject.question}</div><div class="answer-block">${answerBlock}</div>`
+    )
   }
 
-  if (currentSlide === slides.length - 1) {
-    nextButton.style.display = "none";
-    submitButton.style.display = "inline-block";
-  } else {
-    nextButton.style.display = "inline-block";
-    submitButton.style.display = "none";
+  function startQuiz() {
+    currentQuestionIndex = 0;
+    score = 0;
+    quizContainer.html(buildHTML(myQuestions[0]));
+    submitButton.removeClass('hidden');
+    submitButton.on('click', function(event) {
+      handleSubmit(event)
+    })
   }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    var answerID = $('input[name=answer]:checked').attr('id');
+    var correctID = myQuestions[currentQuestionIndex].correctAnswerIndex;
+    if (answerID == correctID) { //double equals because JQuery returns a string for ID
+      score++
+    }
+    nextQuestion();
+
+  }
+
+  function nextQuestion() {
+    updateScore(score);
+    currentQuestionIndex++;
+    if (currentQuestionIndex + 1 > myQuestions.length) {
+      endTest()
+    } else {
+      quizContainer.html(buildHTML(myQuestions[currentQuestionIndex]));
+    }
+  }
+
+  function endTest() {
+    resultsContainer.prepend(`<div>quiz over dude, go home!</div>`)
+  }
+
+  function updateScore() {
+    resultsContainer.html(
+      `<div class="score-block">your score is ${score}</div>`);
+  }
+
+  //presents the 'start test' screen without a question
+  function setupTest() {
+    startButton.on('click', function(event) {
+      startButton.remove();
+      startQuiz();
+    })
+  }
+
+
+
 }
 
-function showNextSlide() {
-  showSlide(currentSlide + 1);
-}
 
-function showPreviousSlide() {
-  showSlide(currentSlide - 1);
-}
-
-buildQuiz();
-
-const previousButton = document.getElementById("previous");
-const nextButton = document.getElementById("next");
-const slides = document.querySelectorAll(".slide");
-let currentSlide = 0;
-
-showSlide(0);
-
-submitButton.addEventListener("click", showResults);
-previousButton.addEventListener("click", showPreviousSlide);
-nextButton.addEventListener("click", showNextSlide);
-
+$(document).ready(function() {
+  askQuestions();
 });
-};
