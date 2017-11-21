@@ -1,4 +1,4 @@
-(function() {
+function askQuestions() {
   const myQuestions = [{
     question: "Question 1: From what source is the fire of magic born into the hands of human casters?",
     answers: {
@@ -66,11 +66,13 @@ myQuestions.forEach((currentQuestion, questionNumber) => {
     const userAnswer = (answerContainer.querySelector(selector) || {}).value;
   if (userAnswer === currentQuestion.correctAnswer) {
     numCorrect++;
-
     answerContainers[questionNumber].style.color = 'lightgreen';
+    document.write("Correct! Good job.");
   } else {
       answerContainers[questionNumber].style.color =
         'red';
+        document.write("Incorrect");
+
     }
   });
 
@@ -82,7 +84,7 @@ function showSlide(n) {
   slides[n].classList.add("active-slide");
   currentSlide = n;
 
-  if (currentSlide === 0) {
+  if (currentSlide === 0) {Rerun
     previousButton.style.display = "none";
   } else {
     previousButton.style.display = "inline-block";
@@ -117,6 +119,6 @@ showSlide(0);
 submitButton.addEventListener("click", showResults);
 previousButton.addEventListener("click", showPreviousSlide);
 nextButton.addEventListener("click", showNextSlide);
-})();
 
-Rerun
+});
+};
